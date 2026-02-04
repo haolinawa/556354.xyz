@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巴卡云</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/haolinawa/556354.xyz/refs/heads/main/bakayun-xyz.png">
+    <!-- 引入Iconify图标库 -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+    <!-- 自定义字体 -->
+    <style>
+        @font-face {
+            font-family: 'CrookedBlackFun';
+            src: url('https://jsd.cdn.zzko.cn/gh/haolinawa/CrookedBlackFun-woff-online/CrookedBlackFun-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* 全局样式重置 + 基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'CrookedBlackFun', sans-serif;
+        }
+
+        body {
+            background-color: #2d2d2d; /* 深灰色背景 */
+            color: #f5f5f5;
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23444444' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        /* 通用样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: #a1c4fd;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.3, 1.5); /* 非线性动画 */
+        }
+
+        a:hover {
+            color: #c2e9fb;
+            transform: translateX(5px);
+        }
+
+        button {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border: none;
+            padding: 12px 28px;
+            color: #2d2d2d;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.3, 1.5);
+            box-shadow: 0 4px 12px rgba(161, 196, 253, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 18px rgba(161, 196, 253, 0.3);
+        }
+
+        .section-title {
+            font-size: 42px;
+            margin-bottom: 40px;
+            position: relative;
+            color: #c2e9fb;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        /* 导航栏 */
+        nav {
+            padding: 25px 0;
+            position: sticky;
+            top: 0;
+            background-color: rgba(45, 45, 45, 0.95);
+            z-index: 999;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            color: #c2e9fb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            font-size: 20px;
+        }
+
+        /* 首页Hero区 */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://raw.githubusercontent.com/haolinawa/556354.xyz/refs/heads/main/125755029_p0.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 60%;
+            padding: 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            color: #c2e9fb;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #f5f5f5;
+            max-width: 500px;
+        }
+
+        /* 首页特色区（不对称布局） */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .feature-text {
+            font-size: 20px;
+            color: #e0e0e0;
+        }
+
+        .feature-text p {
+            margin-bottom: 20px;
+        }
+
+        .feature-img {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 第二页：关于我们 */
+        .about {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(161, 196, 253, 0.1) 0%, rgba(194, 233, 251, 0.1) 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+        }
+
+        .about-text {
+            font-size: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+        }
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #a1c4fd;
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            color: #c2e9fb;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-size: 18px;
+        }
+
+        /* 第三页：服务 */
+        .services {
+            padding: 100px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            /* 不对称调整：最后一个元素占比不同 */
+            grid-template-areas:
+                "service1 service2"
+                "service3 service3";
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.3, 1.5);
+            border-top: 3px solid transparent;
+            border-image: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%) 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(161, 196, 253, 0.15);
+        }
+
+        .service-card:nth-child(1) { grid-area: service1; }
+        .service-card:nth-child(2) { grid-area: service2; }
+        .service-card:nth-child(3) { grid-area: service3; }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 25px;
+            color: #a1c4fd;
+        }
+
+        .service-card h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #c2e9fb;
+        }
+
+        .service-card p {
+            font-size: 18px;
+            color: #e0e0e0;
+        }
+
+        /* 第四页：案例 */
+        .cases {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(161, 196, 253, 0.05) 0%, rgba(194, 233, 251, 0.05) 100%);
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 0.8fr 1.2fr;
+            gap: 25px;
+        }
+
+        .case-item {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .case-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.3, 1.5);
+        }
+
+        .case-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .case-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        }
+
+        .case-overlay h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #c2e9fb;
+        }
+
+        .case-overlay p {
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+
+        /* 第五页：联系我们 */
+        .contact {
+            padding: 100px 0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            font-size: 32px;
+            color: #a1c4fd;
+            margin-top: 5px;
+        }
+
+        .contact-text h3 {
+            font-size: 24px;
+            color: #c2e9fb;
+            margin-bottom: 8px;
+        }
+
+        .contact-text p {
+            font-size: 18px;
+            color: #e0e0e0;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #c2e9fb;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(161, 196, 253, 0.3);
+            border-radius: 4px;
+            color: #f5f5f5;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #a1c4fd;
+            box-shadow: 0 0 0 2px rgba(161, 196, 253, 0.2);
+        }
+
+        /* 页脚 */
+        footer {
+            padding: 50px 0 30px;
+            background: #222;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 18px;
+            color: #a1c4fd;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            font-size: 16px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">巴卡云</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#services">服务</a></li>
+                <li><a href="#contact">联系咱们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 首页（第一页） -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>巴卡云<br>不做千篇一律的云服务</h1>
+                <p>用稳定和质量<br>助力你慢速上云（甚至不上捏）</p>
+	    <a href="#about" style="text-decoration: none;">
+	   <button style="margin-top: 30px;">About us</button>
+	   </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">为什么选巴卡云？</h2>
+            <div class="features-grid">
+                <div class="feature-text">
+                    <p>咱其实也不知道</p>
+                    <p>巴卡云肥肠卡</p>
+                    <p>让你卡到爽似掉（</p>
+                    <p>但是能用就行惹cwc</p>
+                    <p>使用前请遵守cf*平台的协议</p>
+	    <a href="https://www.cloudflare-cn.com/" target="_blank" style="text-decoration: none;">
+	   <button style="margin-top: 30px;">Learn more</button>
+	   </a>
+                </div>
+                <div class="feature-img">
+                    <img src="https://raw.githubusercontent.com/haolinawa/556354.xyz/refs/heads/main/server1.png" alt="云服务器节点分布">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二页：关于我们 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">关于巴卡云</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>2026年的1月，有只baka想出一个想法</p>
+                    <p>如果自己开服务器会咋样捏？</p>
+                    <p>于是，这个网站就应运而生</p>
+                    <p>虽然没用户（0个人哦）</p>
+                    <p>但咱也不搞真的</p>
+                    <p>但咱的目标也不明确咕咕咕</p>
+                    <button style="margin-top: 20px;">Know our story</button>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <h3><1年</h3>
+                        <p>小小ᗜᴗᗜ云</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>???.??%</h3>
+                        <p>不保证全年服务可用性</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>0</h3>
+                        <p>累计服务用户数</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三页：服务 -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">咱们的服务</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <iconify-icon icon="ph:server-light" class="service-icon"></iconify-icon>
+                    <h3>域名分发</h3>
+                    <p>尊敬的用户抱歉</p>
+                    <p>很遗憾收到服务商要求暂停的通知</p>
+                    <p>所以暂时无法使用</p>
+                </div>
+                <div class="service-card">
+                    <iconify-icon icon="ph:database-light" class="service-icon"></iconify-icon>
+                    <h3>云空间管理</h3>
+                    <p>10G存储+免流量费</p>
+                    <p>​全球加速（不含大陆）</p>
+                    <p>​完全兼容S3 API（image支持）</p>
+                    <p>​↓ ↓ ↓</p>
+                    <a href="https://www.cloudflare.com/zh-cn/developer-platform/products/r2/">
+	点击咱跳转
+	</a>
+
+
+
+                </div>
+                <div class="service-card">
+                    <iconify-icon icon="ph:shield-check-light" class="service-icon"></iconify-icon>
+                    <h3>安全防护</h3>
+                    <p>自动HTTPS</p>
+                    <p>免费，快速的SSL/TLS 证书</p>
+                    <p>Google自动签发证书</p>
+                    <p>​↓ ↓ ↓</p>
+                    <a href="https://www.cloudflare.com/zh-cn/application-services/products/ssl/">
+	点击咱跳转
+	</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第五页：联系我们 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">联系咱们</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <iconify-icon icon="ph:phone-light" class="contact-icon"></iconify-icon>
+                        <div class="contact-text">
+                            <h3>联系方式</h3>
+                            <p>邮箱:baka@556354.xyz</p>
+                            <p>在线时间:周末</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <iconify-icon icon="ph:mail-light" class="contact-icon"></iconify-icon>
+                        <div class="contact-text">
+                            <h3>其他的联系方式</h3>
+                            <p>请注意，不能保证您的消息会得到回复。</p>
+                            <p>↓ ↓ ↓</p>
+                    <a href="https://www.spaceship.com/zh/domains/whois/contact/?d=556354.xyz">
+	联系咱的网站域注册的笨蛋
+	</a>
+                        </div>
+                    </div>
+
+                        </div>
+                    </div>
+                </div>
+
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-text">巴卡云 - 让云服务更笨蛋</div>
+            <div class="copyright">© 2026 巴卡云™</div>
+        </div>
+    </footer>
+</body>
+</html>
